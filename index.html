@@ -53,6 +53,7 @@
     <button class="active" onclick="openTab(event, 'academy')">🏫 Academy</button>
     <button onclick="openTab(event, 'kitchen')">🥟 Kitchen</button>
     <button onclick="openTab(event, 'life')">🏠 Daily Life</button>
+    <button onclick="openTab(event, 'emotions')">😊 Emotions</button>
     <button onclick="openTab(event, 'grammar')">🧩 Grammar</button>
     <button onclick="openTab(event, 'writing')">🖊️ Writing</button>
     <button onclick="openTab(event, 'quiz')">🧠 Quiz</button>
@@ -136,6 +137,59 @@
             <button onclick="speak('我')">我 (I)</button> + <button onclick="speak('飲')">飲 (Drink)</button> + <button onclick="speak('水')">水 (Water)</button>
         </div>
     </div>
+
+    <div id="emotions" class="tab-content">
+    <h1>心情 Emotions (Sām Chìhng)</h1>
+    <div class="grammar-rule">
+        <h3>💡 Expressing Feelings</h3>
+        <p>In Cantonese, you usually say: <b>我 好 [Emotion]</b> (Ngóh hóu...) which means "I am very [Emotion]".</p>
+    </div>
+
+    <div class="grid">
+        <div class="card" onclick="speak('開心')">
+            <span class="char-big">開心</span>
+            <span class="pinyin">Hōi Sām</span>
+            <div class="eng">Happy</div>
+        </div>
+
+        <div class="card" onclick="speak('唔開心')">
+            <span class="char-big">唔開心</span>
+            <span class="pinyin">M̀h Hōi Sām</span>
+            <div class="eng">Sad</div>
+        </div>
+
+        <div class="card" onclick="speak('嬲')">
+            <span class="char-big">嬲</span>
+            <span class="pinyin">Nāu</span>
+            <div class="eng">Angry</div>
+        </div>
+
+        <div class="card" onclick="speak('驚')">
+            <span class="char-big">驚</span>
+            <span class="pinyin">Gīng</span>
+            <div class="eng">Scared</div>
+        </div>
+
+        <div class="card" onclick="speak('攰')">
+            <span class="char-big">攰</span>
+            <span class="pinyin">Guih</span>
+            <div class="eng">Tired</div>
+        </div>
+
+        <div class="card" onclick="speak('興奮')">
+            <span class="char-big">興奮</span>
+            <span class="pinyin">Hīng Fáhn</span>
+            <div class="eng">Excited</div>
+        </div>
+    </div>
+
+    <div class="interactive-box">
+        <p>Try saying: <b>"I am very happy"</b></p>
+        <button onclick="speak('我')">我 (I)</button> + 
+        <button onclick="speak('好')">好 (Very)</button> + 
+        <button onclick="speak('開心')">開心 (Happy)</button>
+    </div>
+</div>
 
     <div id="writing" class="tab-content">
         <h1>🖊️ Writing Lab</h1>
