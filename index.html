@@ -45,6 +45,43 @@
         .grammar-rule { background: #fff3e0; padding: 15px; border-radius: 10px; border-left: 5px solid #ff9800; margin-bottom: 15px; text-align: left;}
         
         canvas { border: 2px solid var(--dark); background: white; cursor: crosshair; border-radius: 10px; width: 100%; max-width: 400px; }
+        /* Grammar Logic Styling */
+        .grammar-grid { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 15px; 
+            margin: 20px 0; 
+        }
+        .logic-card { 
+            padding: 20px; 
+            border-radius: 20px; 
+            text-align: center; 
+            border: 3px solid;
+            transition: 0.3s;
+        }
+        .logic-card.positive { border-color: var(--green); background: #f0fff4; }
+        .logic-card.negative { border-color: var(--red); background: #fff5f5; }
+        
+        .label { display: block; font-size: 0.8rem; text-transform: uppercase; font-weight: bold; color: #666; }
+        .big-char { display: block; font-size: 2.5rem; font-weight: bold; margin: 10px 0; }
+        
+        .example-box { 
+            background: #f1f2f6; 
+            padding: 15px; 
+            border-radius: 15px; 
+            border-left: 8px solid var(--blue); 
+            margin-bottom: 25px;
+            text-align: left;
+        }
+        .listen-btn {
+            background: white;
+            border: 2px solid #ddd;
+            padding: 5px 10px;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 0.9rem;
+        }
+        .listen-btn:hover { background: #eee; }
     </style>
 </head>
 <body>
@@ -137,40 +174,41 @@
             <button onclick="speak('我')">我 (I)</button> + <button onclick="speak('飲')">飲 (Drink)</button> + <button onclick="speak('水')">水 (Water)</button>
         </div>
         <div class="container">
-    <h1>📝 Grammar Playground</h1>
+            
+    <h1>🧩 Grammar of Yes & No</h1>
     <p style="text-align: center;">Learn how to say "Yes," "No," "Good," and "Bad"!</p>
 
-    <h2>The "Is" vs "Is Not" </h2>
+    <h2 class="kitchen-h2" style="background:var(--dark)">The "Is" vs "Is Not" (Identity)</h2>
     <div class="grammar-grid">
         <div class="logic-card positive">
             <span class="label">To Be / Yes</span>
             <span class="big-char">係</span>
-            <b>Haih</b>
+            <b class="pinyin">Haih</b>
             <p>Use this to say what something <b>IS</b>.</p>
             <button class="listen-btn" onclick="speak('係')">Listen 🔊</button>
         </div>
         <div class="logic-card negative">
             <span class="label">Not To Be / No</span>
             <span class="big-char">唔係</span>
-            <b>Mh haih</b>
+            <b class="pinyin">Mh haih</b>
             <p>Use this to say what something <b>IS NOT</b>.</p>
             <button class="listen-btn" onclick="speak('唔係')">Listen 🔊</button>
         </div>
     </div>
 
-    <h2>The "Good" vs "Not Good"</h2>
+    <h2 class="kitchen-h2" style="background:var(--veg)">The "Good" vs "Not Good" (Quality)</h2>
     <div class="grammar-grid">
         <div class="logic-card positive">
             <span class="label">Good / Well</span>
             <span class="big-char">好</span>
-            <b>Hou</b>
+            <b class="pinyin">Hou</b>
             <p>Use this for "Good" or "Very."</p>
             <button class="listen-btn" onclick="speak('好')">Listen 🔊</button>
         </div>
         <div class="logic-card negative">
             <span class="label">Not Good / Bad</span>
             <span class="big-char">唔好</span>
-            <b>Mh hou</b>
+            <b class="pinyin">Mh hou</b>
             <p>Use this for "Not Good" or "Don't."</p>
             <button class="listen-btn" onclick="speak('唔好')">Listen 🔊</button>
         </div>
@@ -178,8 +216,7 @@
 
     <div class="example-box">
         <h3>🚀 Sentence Builder Challenge:</h3>
-        <p>Combine these with your food words!</p>
-        <ul style="list-style: none; padding: 0;">
+        <ul style="list-style: none; padding: 0; line-height: 2;">
             <li>✅ <b>好食 (Hou sek)</b> = Good to eat (Delicious!)</li>
             <li>❌ <b>唔好食 (Mh hou sek)</b> = Not good to eat (Yucky!)</li>
             <li>✅ <b>係魚 (Haih yú)</b> = It is a fish.</li>
@@ -187,23 +224,34 @@
         </ul>
     </div>
 
-
-<h2>The "Have" vs "Not Have" (Existence)</h2>
+    <h2 class="kitchen-h2" style="background:var(--blue)">The "Have" vs "Not Have" (Existence)</h2>
     <div class="grammar-grid">
         <div class="logic-card positive">
             <span class="label">To Have / There is</span>
             <span class="big-char">有</span>
-            <b>Yáuh</b>
+            <b class="pinyin">Yáuh</b>
             <p>Use this for things you <b>OWN</b> or that <b>EXIST</b>.</p>
             <button class="listen-btn" onclick="speak('有')">Listen 🔊</button>
         </div>
         <div class="logic-card negative">
             <span class="label">To Not Have / There is not</span>
             <span class="big-char">無</span>
-            <b>Mòuh</b>
+            <b class="pinyin">Mòuh</b>
             <p>Use this when something is <b>MISSING</b>.</p>
             <button class="listen-btn" onclick="speak('無')">Listen 🔊</button>
         </div>
+    </div>
+
+    <div class="example-box" style="border-color: var(--orange);">
+        <h3>💡 Pro Tip: Existence Questions</h3>
+        <p>Combine these to ask "Do you have?": <b>「有無...?」 (Yáuh mòuh...?)</b></p>
+        <hr style="border: 0; border-top: 1px dashed #ccc; margin: 10px 0;">
+        <ul style="list-style: none; padding: 0; line-height: 2;">
+            <li>✅ <b>我有魚 (Ngóh yáuh yú)</b> = I have fish.</li>
+            <li>❌ <b>我無錢 (Ngóh mòuh chín)</b> = I have no money.</li>
+            <li>❓ <b>有無叉燒包?</b> = Do you have BBQ pork buns?</li>
+        </ul>
+    </div>
     </div>
 
     <div class="example-box">
