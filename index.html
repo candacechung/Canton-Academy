@@ -1,0 +1,232 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Cantonese Explorer Academy</title>
+    <style>
+        :root { 
+            --red: #ff4757; --blue: #1e90ff; --green: #2ed573; --dark: #2f3542; 
+            --meat: #e74c3c; --sea: #3498db; --veg: #27ae60; --fruit: #f39c12; --dessert: #9b59b6;
+        }
+        body { font-family: 'Comic Sans MS', 'Chalkboard SE', 'Microsoft JhengHei', sans-serif; background: #fff5f5; color: #333; margin: 0; padding-bottom: 50px; }
+        
+        /* Navigation Bar */
+        nav { 
+            background: white; position: sticky; top: 0; z-index: 1000; 
+            display: flex; justify-content: space-around; padding: 10px; 
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1); border-bottom: 4px solid var(--dark);
+        }
+        nav button { 
+            background: #f1f2f6; border: none; padding: 10px 15px; border-radius: 12px; 
+            font-weight: bold; cursor: pointer; transition: 0.3s;
+        }
+        nav button.active { background: var(--red); color: white; transform: scale(1.1); }
+
+        .container { max-width: 900px; margin: 20px auto; background: white; padding: 30px; border-radius: 30px; border: 4px solid var(--dark); box-shadow: 8px 8px 0px var(--red); }
+        .tab-content { display: none; }
+        .tab-content.active { display: block; animation: fadeIn 0.4s; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        /* General Styles from original */
+        h1, h2 { text-align: center; color: var(--red); }
+        .grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 15px; margin-top: 20px; }
+        .card, .element-card { 
+            background: white; border: 2px solid #eee; padding: 15px; border-radius: 20px; 
+            text-align: center; cursor: pointer; transition: 0.3s; 
+        }
+        .card:hover { border-color: var(--red); transform: translateY(-3px); }
+        .char-big { font-size: 2.5rem; display: block; font-weight: bold; color: var(--dark); }
+        .pinyin { color: #e67e22; font-weight: bold; }
+
+        /* Canvas Styles */
+        .canvas-area { border: 2px solid var(--dark); background: white; cursor: crosshair; margin: 10px 0; border-radius: 10px; width: 100%; max-width: 400px; }
+        
+        /* Kitchen Styles */
+        .kitchen-h2 { color: white; padding: 10px; border-radius: 10px; font-size: 1.2rem; margin-top: 25px; }
+        .star { float: right; cursor: pointer; filter: grayscale(1); }
+        .star.active { filter: grayscale(0); }
+    </style>
+</head>
+<body>
+
+<nav>
+    <button class="active" onclick="openTab(event, 'academy')">🏫 Academy</button>
+    <button onclick="openTab(event, 'writing')">🖊️ Writing</button>
+    <button onclick="openTab(event, 'voice')">🎙️ Voice</button>
+    <button onclick="openTab(event, 'kitchen')">🥟 Kitchen</button>
+    <button onclick="openTab(event, 'quiz')">🧠 Quiz</button>
+</nav>
+
+<div class="container">
+    
+    <div id="academy" class="tab-content active">
+        <h1>廣東話 Academy</h1>
+        <div style="background: #f1f2f6; padding: 20px; border-radius: 15px; text-align: center; border: 3px solid #ffa502;">
+            <h3>🎯 Word of the Moment</h3>
+            <button onclick="getPhrase()">Random Word!</button>
+            <div id="display-area" style="font-size: 1.8rem; margin-top:15px;">你好 (Neih hou)</div>
+        </div>
+
+        <h2>🔢 Counting</h2>
+        <div class="grid">
+            <div class="card" onclick="speak('一')"><span class="char-big">一</span>Yat</div>
+            <div class="card" onclick="speak('二')"><span class="char-big">二</span>Yih</div>
+            <div class="card" onclick="speak('三')"><span class="char-big">三</span>Saam</div>
+            <div class="card" onclick="speak('十')"><span class="char-big">十</span>Sap</div>
+        </div>
+
+        <h2>🔥 The Five Elements</h2>
+        <div class="grid">
+            <div class="card" style="border-color:#ffd700" onclick="speak('金')"><span class="char-big">金</span>Gam (Metal)</div>
+            <div class="card" style="border-color:#2ed573" onclick="speak('木')"><span class="char-big">木</span>Muhk (Wood)</div>
+            <div class="card" style="border-color:#1e90ff" onclick="speak('水')"><span class="char-big">水</span>Seui (Water)</div>
+            <div class="card" style="border-color:#ff4757" onclick="speak('火')"><span class="char-big">火</span>Fó (Fire)</div>
+            <div class="card" style="border-color:#8b4513" onclick="speak('土')"><span class="char-big">土</span>Tou (Earth)</div>
+        </div>
+    </div>
+
+    <div id="writing" class="tab-content">
+        <h1>🖊️ The Art of Writing</h1>
+        <div style="background: #fff3e0; padding: 15px; border-radius: 10px; border-left: 5px solid #ff9800; margin-bottom: 20px;">
+            <b>Golden Rule:</b> Top to Bottom, Left to Right!
+        </div>
+        <div class="grid">
+            <div class="card"><span class="char-big">人</span>Yahn (Person)<br><small>2 Strokes</small></div>
+            <div class="card"><span class="char-big">山</span>Saan (Mountain)<br><small>3 Strokes</small></div>
+        </div>
+        <div style="text-align: center; margin-top: 30px; background: #f1f2f6; padding: 20px; border-radius: 20px;">
+            <h3>🖱️ Practice Pad</h3>
+            <canvas id="paintCanvas" width="300" height="200" class="canvas-area"></canvas><br>
+            <button onclick="clearCanvas()" style="background:var(--red); color:white;">Clear Pad</button>
+        </div>
+    </div>
+
+    <div id="voice" class="tab-content">
+        <h1>🎙️ Voice Lab</h1>
+        <p style="text-align:center">Record yourself and compare!</p>
+        <div style="background: #fff3e0; padding: 25px; border-radius: 20px; border: 3px dashed #ffa502; text-align: center;">
+            <div id="status" style="font-weight:bold; color:var(--red); margin-bottom:10px;">Ready?</div>
+            <button id="recordBtn" onclick="startRecording()">🎤 Record</button>
+            <button id="stopBtn" onclick="stopRecording()" disabled>⏹️ Stop</button>
+            <button id="playBtn" onclick="playBack()" disabled>▶️ Play Back</button>
+        </div>
+        <div class="grid">
+            <div class="card" onclick="speak('心')"><span class="char-big">心</span>Sam (Heart) 🔊</div>
+            <div class="card" onclick="speak('口')"><span class="char-big">口</span>Hau (Mouth) 🔊</div>
+        </div>
+    </div>
+
+    <div id="kitchen" class="tab-content">
+        <h1>廣東菜 Kitchen</h1>
+        <h2 class="kitchen-h2" style="background:var(--meat)">Meats (Yuhk Leui)</h2>
+        <div class="grid">
+            <div class="card" onclick="speak('牛肉')"><span class="star" onclick="toggleStar(this)">⭐</span><span class="char-big">牛肉</span>Ngau Yuhk</div>
+            <div class="card" onclick="speak('雞肉')"><span class="star" onclick="toggleStar(this)">⭐</span><span class="char-big">雞肉</span>Gāi Yuhk</div>
+        </div>
+        <h2 class="kitchen-h2" style="background:var(--sea)">Seafood (Hói Sīn)</h2>
+        <div class="grid">
+            <div class="card" onclick="speak('蝦')"><span class="star" onclick="toggleStar(this)">⭐</span><span class="char-big">蝦</span>Hā (Shrimp)</div>
+            <div class="card" onclick="speak('魚')"><span class="star" onclick="toggleStar(this)">⭐</span><span class="char-big">魚</span>Yú (Fish)</div>
+        </div>
+    </div>
+
+    <div id="quiz" class="tab-content">
+        <h1>🧠 Mini Quiz</h1>
+        <div style="background: #ced6e0; padding: 30px; border-radius: 15px; text-align: center;">
+            <p>What is the Cantonese word for <b>"Delicious"</b>?</p>
+            <button onclick="checkQuiz('Haa Gau')">Haa Gau</button>
+            <button onclick="checkQuiz('Hou-sek')">Hou-sek</button>
+            <button onclick="checkQuiz('Zoi-gin')">Zoi-gin</button>
+            <div id="quiz-result" style="margin-top:20px; font-weight:bold; font-size:1.5rem;"></div>
+        </div>
+    </div>
+
+</div>
+
+<script>
+    // --- NAVIGATION LOGIC ---
+    function openTab(evt, tabName) {
+        var i, tabcontent, tablinks;
+        tabcontent = document.getElementsByClassName("tab-content");
+        for (i = 0; i < tabcontent.length; i++) { tabcontent[i].classList.remove("active"); }
+        tablinks = document.getElementsByTagName("button");
+        for (i = 0; i < tablinks.length; i++) { tablinks[i].classList.remove("active"); }
+        document.getElementById(tabName).classList.add("active");
+        evt.currentTarget.classList.add("active");
+    }
+
+    // --- SPEECH LOGIC ---
+    function speak(text) {
+        window.speechSynthesis.cancel();
+        const utterance = new SpeechSynthesisUtterance(text);
+        utterance.lang = 'zh-HK';
+        utterance.rate = 0.8;
+        window.speechSynthesis.speak(utterance);
+    }
+
+    // --- RANDOM PHRASE ---
+    const words = [{c:"你好",s:"Neih hou"}, {c:"唔該",s:"M-goi"}, {c:"好食",s:"Hou-sek"}];
+    function getPhrase() {
+        const item = words[Math.floor(Math.random() * words.length)];
+        document.getElementById('display-area').innerHTML = `${item.c} (${item.s})`;
+        speak(item.c);
+    }
+
+    // --- QUIZ LOGIC ---
+    function checkQuiz(answer) {
+        const result = document.getElementById('quiz-result');
+        if(answer === 'Hou-sek') {
+            result.innerText = "✅ Correct! Hou-sek!";
+            result.style.color = "green";
+            speak('好食');
+        } else {
+            result.innerText = "❌ Try again!";
+            result.style.color = "red";
+        }
+    }
+
+    // --- CANVAS LOGIC ---
+    const canvas = document.getElementById('paintCanvas');
+    const ctx = canvas.getContext('2d');
+    let painting = false;
+    canvas.addEventListener('mousedown', () => painting = true);
+    canvas.addEventListener('mouseup', () => { painting = false; ctx.beginPath(); });
+    canvas.addEventListener('mousemove', (e) => {
+        if (!painting) return;
+        const rect = canvas.getBoundingClientRect();
+        ctx.lineWidth = 5; ctx.lineCap = 'round';
+        ctx.lineTo(e.clientX - rect.left, e.clientY - rect.top);
+        ctx.stroke(); ctx.beginPath(); ctx.moveTo(e.clientX - rect.left, e.clientY - rect.top);
+    });
+    function clearCanvas() { ctx.clearRect(0, 0, canvas.width, canvas.height); }
+
+    // --- VOICE REC LOGIC ---
+    let mediaRecorder, audioChunks = [], audioBlob;
+    async function startRecording() {
+        const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+        mediaRecorder = new MediaRecorder(stream);
+        mediaRecorder.ondataavailable = e => audioChunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            audioBlob = new Blob(audioChunks, { type: 'audio/wav' });
+            document.getElementById('playBtn').disabled = false;
+            document.getElementById('status').innerText = "Saved!";
+            audioChunks = [];
+        };
+        mediaRecorder.start();
+        document.getElementById('recordBtn').disabled = true;
+        document.getElementById('stopBtn').disabled = false;
+        document.getElementById('status').innerText = "🔴 Recording...";
+    }
+    function stopRecording() {
+        mediaRecorder.stop();
+        document.getElementById('recordBtn').disabled = false;
+        document.getElementById('stopBtn').disabled = true;
+    }
+    function playBack() { new Audio(URL.createObjectURL(audioBlob)).play(); }
+    
+    function toggleStar(el) { el.classList.toggle('active'); }
+</script>
+
+</body>
+</html>
